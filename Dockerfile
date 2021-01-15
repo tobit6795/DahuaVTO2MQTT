@@ -1,13 +1,9 @@
-FROM python:3.9-alpine
+FROM php:7.4.11-cli
 MAINTAINER Elad Bar <elad.bar@hotmail.com>
 
 WORKDIR /app
 
-COPY *.py ./
-
-RUN apk update && \
-    apk upgrade && \
-    pip install paho-mqtt requests
+COPY *.php ./
 
 ENV DAHUA_VTO_HOST=vto-host
 ENV DAHUA_VTO_USERNAME=Username
@@ -18,6 +14,4 @@ ENV MQTT_BROKER_USERNAME=Username
 ENV MQTT_BROKER_PASSWORD=Password
 ENV MQTT_BROKER_TOPIC_PREFIX=DahuaVTO
 
-RUN chmod +x /app/DahuaVTO.py
-
-ENTRYPOINT ["python3", "/app/DahuaVTO.py"]
+CMD php -f /app/DahuaVTO.php
